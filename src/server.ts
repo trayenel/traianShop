@@ -6,9 +6,8 @@ import path from "path";
 import { engine } from "express-handlebars";
 
 const app = express();
-
-app.engine("handlebars", engine());
-app.set("view engine", "handlebars");
+app.engine("hbs", engine());
+app.set("view engine", "hbs");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "..", "public")));
@@ -17,7 +16,7 @@ app.use("/admin", adminRoutes);
 app.use(shopRoutes);
 
 app.use((req, res, next) => {
-  res.status(404).sendFile(path.join(__dirname, "..", "views", "404.html"));
+  res.status(404).render("404", { pageTitle: "Page not found" });
 });
 
 app.listen(3000);
