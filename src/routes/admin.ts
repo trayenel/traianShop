@@ -5,7 +5,7 @@ const router = Router();
 export const products: Array<object> = [];
 
 router.get("/add-product", (req, res) => {
-  res.render("add-product", {pageTitle: 'Add Product∏'});
+  res.render("add-product", {pageTitle: 'Add Products'});
 });
 
 router.post("/add-product", (req, res) => {
