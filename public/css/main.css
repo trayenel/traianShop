@@ -5,8 +5,7 @@
   color: #41393e;
 }
 
-a,
-a:visited {
+a {
   color: #41393e;
   text-decoration: none;
 }
@@ -32,4 +31,8 @@ header {
 
 h1 {
   margin-left: 10px;
+}
+
+.active {
+  color: #c7e8f3;
 }
