@@ -1,16 +1,15 @@
 import { Router } from "express";
-import path from "path";
 
 const router = Router();
 
-export const product: Array<object> = [];
+export const products: Array<object> = [];
 
-router.get("/add-product", (req, res, next) => {
-  res.sendFile(path.join(__dirname, "..", "..", "views", "add-product.html"));
+router.get("/add-product", (req, res) => {
+  res.render("add-product", {pageTitle: 'Add Product∏'});
 });
 
-router.post("/add-product", (req, res, next) => {
-  product.push({ title: req.body.title });
+router.post("/add-product", (req, res) => {
+  products.push({ title: req.body.title });
   res.redirect("/");
 });
 
