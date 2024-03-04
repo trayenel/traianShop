@@ -1,3 +1,22 @@
-  <body>
-    <h1>Products</h1>
-  </body>
+<main>
+  <h1>Products</h1>
+  {{#if hasProducts}}
+    <div class="grid">
+      {{#each prods}}
+        <article class="product"><header class="product-header"><h1
+            >{{this.title}}</h1></header>
+          <div class="product-img"><img
+              alt="Book pic"
+              src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn-images-1.medium.com%2Fmax%2F2000%2F0*jYTPhSdLKCzrRSxb.jpg&f=1&nofb=1&ipt=2e333ec50644c2681150d35aa8b00e04ca3588409582e3cbca9677210e423265&ipo=images"
+            />
+          </div>
+          <span class="price">20 de lei</span>
+          <div class="product-desc">
+            <span>O CARTE FOARTE FOARTE JMEKERA</span></div>
+        </article>
+      {{/each}}
+    </div>
+  {{else}}
+    <h2>No books added!</h2>
+  {{/if}}
+</main>

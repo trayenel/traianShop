@@ -1,0 +1,23 @@
+.product {
+  width: 200px;
+}
+
+.product-header,
+.product-header h1 {
+  padding: 0;
+  margin: 0;
+}
+
+.product-desc {
+  padding: 0;
+  background-color: #eda2c0;
+}
+
+img {
+  max-height: 300px;
+  max-width: 200px;
+}
+
+.grid {
+  display: grid;
+}

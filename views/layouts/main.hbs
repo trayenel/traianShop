@@ -2,7 +2,13 @@
   <head>
     <meta charset="UTF-8" />
     <title>{{pageTitle}}</title>
-    <link rel="stylesheet" href="/css/product.css" />
+    <link rel="stylesheet" href="/css/main.css" />
+    {{#if productsCSS}}
+      <link rel="stylesheet" href="/css/product.css" />
+    {{/if}}
+    {{#if shopCSS}}
+      <link rel="stylesheet" href="/css/shop.css" />
+    {{/if}}
   </head>
   <body>
     <header>
