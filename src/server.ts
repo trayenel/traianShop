@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import shopRoutes from "./routes/shop";
 import adminRoutes from "./routes/admin";
 import path from "path";
+import { get404 } from "./controllers/errors";
 import { engine } from "express-handlebars";
 
 const app = express();
@@ -15,8 +16,6 @@ app.use(express.static(path.join(__dirname, "..", "public")));
 app.use(shopRoutes);
 app.use("/admin", adminRoutes);
 
-app.use((req, res) => {
-  res.status(404).render("404", { pageTitle: "Page not found" });
-});
+app.use(get404);
 
 app.listen(3000);
