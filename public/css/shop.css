@@ -1,5 +1,5 @@
 .product {
-  width: 200px;
+  max-width: 400px;
 }
 
 .product-header,
@@ -8,16 +8,26 @@
   margin: 0;
 }
 
-.product-desc {
+.price {
+  font-size: 1.44rem;
+}
+
+.product-desc,
+.price {
   padding: 0;
   background-color: #eda2c0;
+  text-align: center;
 }
 
 img {
-  max-height: 300px;
-  max-width: 200px;
+  max-height: 400px;
+  max-width: 400px;
 }
 
 .grid {
+  margin-left: 1%;
   display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  grid-template-rows: repeat(10, 1fr);
 }

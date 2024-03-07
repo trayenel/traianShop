@@ -6,8 +6,6 @@ let products: object[] = [];
 const p = path.join(__dirname, "..", "..", "data", "products.json");
 
 function getProductsFromFile(cb: Function) {
-  let products: object[] = [];
-
   fs.readFile(p, (err, data) => {
     if (err) return cb([]);
     cb(JSON.parse(data.toString()));
@@ -16,9 +14,20 @@ function getProductsFromFile(cb: Function) {
 
 export default class Product {
   private title: string;
+  private price: string;
+  private image: string;
+  private description: string;
 
-  constructor(t: string) {
-    this.title = t;
+  constructor(
+    title: string,
+    price: string,
+    image: string,
+    description: string,
+  ) {
+    this.title = title;
+    this.price = price;
+    this.image = image;
+    this.description = description;
   }
 
   public save() {

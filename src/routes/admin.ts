@@ -1,8 +1,10 @@
 import { Router } from "express";
-import { getAddProduct } from "../controllers/products";
-import { postAddProduct } from "../controllers/products";
+import {getAddProduct, getAdminProducts} from "../controllers/admin";
+import { postAddProduct } from "../controllers/admin";
 
 const router = Router();
+
+router.get("/products", getAdminProducts);
 
 router.get("/add-product", getAddProduct);
 

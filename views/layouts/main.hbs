@@ -14,8 +14,11 @@
     <header>
       <nav>
         <ul>
-          <li><a href="/" class="{{#if activeShop}}active{{/if}}">Shop</a></li>
-          <li><a href="/admin/add-product" class="{{#if activeAdmin}}active{{/if}}">Add Product</a></li>
+            <li><a href="/" class="{{#if activeShop}}active{{/if}}">Shop</a></li>
+            <li><a href="/admin/add-product" class="{{#if activeAdmin}}active{{/if}}">Add Product</a></li>
+            <li><a href="/cart" class="{{#if activeCart}}active{{/if}}">Cart</a></li>
+            <li><a href="/products" class="{{#if activeProducts}}active{{/if}}">Products</a></li>
+            <li><a href="/admin/products" class="{{#if activeAdminProducts}}active{{/if}}">Admin Products</a></li>
         </ul>
       </nav>
     </header>
