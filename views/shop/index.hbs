@@ -10,7 +10,11 @@
           <div class="price">{{this.price}}</div>
           <div class="product-desc">
             <span>{{this.description}}</span>
-          </div><button>Add to cart</button>
+          </div>
+          <div class="product-actions"><form
+              action="add-to-cart"
+              method="POST"
+            ><button class="btn">Add to cart</button></form></div>
         </article>
       {{/each}}
     </div>

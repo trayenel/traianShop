@@ -1,0 +1,24 @@
+<main>
+  <h1>Products</h1>
+  {{#if hasProducts}}
+    <div class="grid">
+      {{#each prods}}
+        <article class="product"><header class="product-header"><h1
+            >{{this.title}}</h1></header>
+          <div class="product-img"><img alt="Book pic" src={{this.image}} />
+          </div>
+          <div class="price">{{this.price}}</div>
+          <div class="product-desc">
+            <span>{{this.description}}</span>
+          </div>
+          <div class="product-actions">
+            <a class="btn" href="/products/">Details</a>
+            <form action="add-to-cart" method="POST"><button class="btn">Add to
+                cart</button></form></div>
+        </article>
+      {{/each}}
+    </div>
+  {{else}}
+    <h2>No books added!</h2>
+  {{/if}}
+</main>

@@ -27,13 +27,3 @@ textarea:focus {
   outline-color: #eda2c0;
 }
 
-button {
-  border: none;
-  padding: 5px;
-  border-radius: 5px;
-  background-color: #c7e8f3ff;
-}
-
-button:hover {
-  background-color: #eda2c0;
-}

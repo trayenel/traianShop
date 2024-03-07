@@ -31,3 +31,23 @@ img {
   gap: 10px;
   grid-template-rows: repeat(10, 1fr);
 }
+
+.btn {
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  height: 90%;
+  background-color: #c7e8f3ff;
+}
+
+.btn:hover {
+  background-color: #f0eff4;
+}
+
+.product-actions {
+  background-color: #eda2c0;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  height: 10%;
+}
