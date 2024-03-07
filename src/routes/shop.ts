@@ -5,6 +5,7 @@ import {
   getOrders,
   getProductDetail,
   getProducts,
+  postCart,
 } from "../controllers/shop";
 import { getIndex } from "../controllers/shop";
 
@@ -21,4 +22,6 @@ router.get("/products", getProducts);
 router.get("/orders", getOrders);
 
 router.get("/products/:productId", getProductDetail);
+
+router.post("/cart", postCart);
 export default router;

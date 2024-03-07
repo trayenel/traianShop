@@ -2,4 +2,6 @@
   <h1>{{product.title}}</h1>
   <div> <img src="{{product.image}}" /> </div>
   <div>{{product.description}}</div>
+  <form action="/cart" method="POST"><button>Add to cart</button>
+    <input type="hidden" value="{{product.id}}" name="productId" /></form>
 </main>

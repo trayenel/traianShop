@@ -1,4 +1,5 @@
 import Product from "../models/product";
+import Cart from "../models/cart";
 
 export const getIndex = (req, res) => {
   Product.fetchAll((products: Array<object>): void => {
@@ -29,6 +30,12 @@ export const getCart = (req, res) => {
     pageTitle: "Your cart",
     activeCart: true,
   });
+};
+
+export const postCart = (req, res) => {
+  const prodId = req.body.productId;
+  Cart.addProduct(prodId);
+  res.redirect("/cart");
 };
 
 export const getCheckout = (req, res) => {
