@@ -10,7 +10,13 @@ export const getAddProduct = (req, res, next) => {
 
 export const postAddProduct = (
   req: {
-    body: { title: string; price: string; image: string; description: string };
+    body: {
+      title: string;
+      price: string;
+      image: string;
+      description: string;
+      id: number;
+    };
   },
   res,
   next,

@@ -17,6 +17,7 @@ export default class Product {
   private price: string;
   private image: string;
   private description: string;
+  private id: number;
 
   constructor(
     title: string,
@@ -24,6 +25,7 @@ export default class Product {
     image: string,
     description: string,
   ) {
+    this.id = Math.random();
     this.title = title;
     this.price = price;
     this.image = image;
