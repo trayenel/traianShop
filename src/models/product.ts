@@ -17,7 +17,7 @@ export default class Product {
   private price: string;
   private image: string;
   private description: string;
-  private id: number;
+  private id: string;
 
   constructor(
     title: string,
@@ -25,7 +25,7 @@ export default class Product {
     image: string,
     description: string,
   ) {
-    this.id = Math.random();
+    this.id = Math.random().toString();
     this.title = title;
     this.price = price;
     this.image = image;
@@ -45,5 +45,12 @@ export default class Product {
 
   public static fetchAll(cb: Function) {
     getProductsFromFile(cb);
+  }
+
+  public static findById(id: string, cb: Function) {
+    getProductsFromFile((products: Array<object>) => {
+      const product = products.find((p) => p.id === id);
+      cb(product);
+    });
   }
 }

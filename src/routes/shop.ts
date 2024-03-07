@@ -3,6 +3,7 @@ import {
   getCart,
   getCheckout,
   getOrders,
+  getProductDetail,
   getProducts,
 } from "../controllers/shop";
 import { getIndex } from "../controllers/shop";
@@ -19,4 +20,5 @@ router.get("/products", getProducts);
 
 router.get("/orders", getOrders);
 
+router.get("/products/:productId", getProductDetail);
 export default router;

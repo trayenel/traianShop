@@ -1,6 +1,6 @@
 import Product from "../models/product";
 
-export const getAddProduct = (req, res, next) => {
+export const getAddProduct = (req, res) => {
   res.render("admin/add-product", {
     pageTitle: "Add Products",
     productsCSS: true,
@@ -19,7 +19,6 @@ export const postAddProduct = (
     };
   },
   res,
-  next,
 ) => {
   const product = new Product(
     req.body.title,
@@ -31,7 +30,7 @@ export const postAddProduct = (
   res.redirect("/");
 };
 
-export const getAdminProducts = (req, res, next) => {
+export const getAdminProducts = (req, res) => {
   Product.fetchAll((products: object[]): void => {
     res.render("admin/products", {
       prods: products,
