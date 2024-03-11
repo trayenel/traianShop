@@ -1,7 +1,7 @@
 import Product from "../models/product";
 
 export const getAddProduct = (req, res) => {
-  res.render("admin/add-product", {
+  res.render("admin/edit-product", {
     pageTitle: "Add Products",
     productsCSS: true,
     activeAdmin: true,
@@ -38,6 +38,22 @@ export const getAdminProducts = (req, res) => {
       hasProducts: products.length > 0,
       shopCSS: true,
       activeAdminProducts: true,
+    });
+  });
+};
+
+export const getEditProduct = (req, res) => {
+  const editMode = req.query.edit;
+  if (!editMode) return res.redirect("/");
+  const prodId: string = req.params.productId;
+  Product.findById(prodId, (prod: Object) => {
+    if (!prod) return res.redirect("/");
+    res.render("admin/edit-product", {
+      pageTitle: "Edit Products",
+      productsCSS: true,
+      activeAdmin: true,
+      editing: editMode,
+      product: prod,
     });
   });
 };
