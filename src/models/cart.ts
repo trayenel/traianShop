@@ -17,14 +17,13 @@ export default class Cart {
         (prod) => prod.id === id,
       );
       const existingProduct = cart.products[existingProductIndex];
-      let updatedProduct;
       if (existingProduct) {
-        updatedProduct = { ...existingProduct };
+        let updatedProduct = { ...existingProduct };
         updatedProduct.qty = updatedProduct.qty + 1;
         cart.products = [...cart.products];
         cart.products[existingProductIndex] = updatedProduct;
       } else {
-        updatedProduct = { id: id, qty: 1 };
+        let updatedProduct = { id: id, qty: 1 };
         cart.products = [...cart.products, updatedProduct];
       }
       cart.totalPrice = cart.totalPrice + productPrice;
@@ -35,10 +34,12 @@ export default class Cart {
     fs.readFile(p, (err, data) => {
       if (err) return;
       const updatedCart = { ...JSON.parse(data.toString()) };
-      const product = updatedCart.products.find((prod) => prod.id === id);
+      const product = updatedCart.products.find(
+        (prod: { id: string; price: number }) => prod.id === id,
+      );
       const productQty = product.qty;
       updatedCart.products = updatedCart.products.filter(
-        (prod) => prod.id !== id,
+        (prod: { id: string; price: number }) => prod.id !== id,
       );
       updatedCart.totalPrice = updatedCart.totalPrice - price * productQty;
       fs.writeFile(p, JSON.stringify(updatedCart), (err) => console.log(err));

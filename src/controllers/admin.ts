@@ -89,17 +89,8 @@ export const postEditProduct = (req, res) => {
 
 export const postDeleteProduct = (req, res) => {
   const prodId: string = req.body.productId;
-  Product.findById(
-    prodId,
-    (product: {
-      title: string;
-      price: string;
-      image: string;
-      description: string;
-      id: number;
-    }) => {
-      Product.deleteProduct(product);
-    },
-  );
+  Product.findById(prodId, (product: Product) => {
+    Product.deleteProduct(product);
+  });
   return res.redirect("/admin/products");
 };
