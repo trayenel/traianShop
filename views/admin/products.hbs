@@ -12,8 +12,12 @@
             <span>{{this.description}}</span>
           </div>
           <div class="product-actions">
-            <a href="/admin/edit-product/{{this.id}}" class="btn">Edit</a>
+            <a
+              href="/admin/edit-product/{{this.id}}?edit=true"
+              class="btn"
+            >Edit</a>
             <form action="delete-product" method="POST">
+              <input type="hidden" value="{{this.id}}" name="productId" />
               <button class="btn" type="submit">Delete</button>
             </form>
           </div>

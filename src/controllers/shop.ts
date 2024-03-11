@@ -42,7 +42,7 @@ export const postCart = (req, res) => {
       image: string;
       description: string;
     }) => {
-      Cart.addProduct(prodId, +product.price.split(' ')[0]);
+      Cart.addProduct(prodId, +product.price.split(" ")[0]);
     },
   );
   res.redirect("/cart");

@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import Cart from "./cart";
 
 let products: object[] = [];
 
@@ -20,24 +21,35 @@ export default class Product {
   private id: string;
 
   constructor(
+    id: any,
     title: string,
     price: string,
     image: string,
     description: string,
   ) {
-    this.id = Math.random().toString();
     this.title = title;
     this.price = price;
     this.image = image;
     this.description = description;
+    this.id = id;
   }
 
   public save() {
     getProductsFromFile((products: object[]) => {
-      products.push(this);
-      fs.writeFile(p, JSON.stringify(products), (err) => {
-        console.log(err);
-      });
+      if (this.id) {
+        const productIndex = products.findIndex((prod) => prod.id === this.id);
+        const updatedArray = [...products];
+        updatedArray[productIndex] = this;
+        fs.writeFile(p, JSON.stringify(updatedArray), (err) => {
+          console.log(err);
+        });
+      } else {
+        this.id = Math.random().toString();
+        products.push(this);
+        fs.writeFile(p, JSON.stringify(products), (err) => {
+          console.log(err);
+        });
+      }
     });
 
     fs.readFile(p, (err, data) => {});
@@ -51,6 +63,16 @@ export default class Product {
     getProductsFromFile((products: Array<object>) => {
       const product = products.find((p) => p.id === id);
       cb(product);
+    });
+  }
+
+  public static deleteProduct(product: Product) {
+    getProductsFromFile((products: Array<object>) => {
+      const newProd = products.filter((prod) => prod.id !== product.id);
+      fs.writeFile(p, JSON.stringify(newProd), (err) => {
+        console.log(err);
+        if (!err) Cart.deleteProduct(product.id, +product.price);
+      });
     });
   }
 }
