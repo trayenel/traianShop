@@ -37,12 +37,21 @@ export default class Cart {
       const product = updatedCart.products.find(
         (prod: { id: string; price: number }) => prod.id === id,
       );
+      if (!product) return;
       const productQty = product.qty;
       updatedCart.products = updatedCart.products.filter(
         (prod: { id: string; price: number }) => prod.id !== id,
       );
       updatedCart.totalPrice = updatedCart.totalPrice - price * productQty;
       fs.writeFile(p, JSON.stringify(updatedCart), (err) => console.log(err));
+    });
+  }
+
+  public static getProducts(cb: Function) {
+    fs.readFile(p, (err, data) => {
+      const cart = JSON.parse(data.toString());
+      if (err) cb(null);
+      cb(cart);
     });
   }
 }

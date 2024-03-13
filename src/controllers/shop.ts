@@ -2,33 +2,50 @@ import Product from "../models/product";
 import Cart from "../models/cart";
 
 export const getIndex = (req, res) => {
-  Product.fetchAll((products: Array<object>): void => {
-    res.render("shop/index", {
-      prods: products,
-      hasProducts: products.length > 0,
-      shopCSS: true,
-      pageTitle: "Shop",
-      activeShop: true,
-    });
-  });
+  Product.fetchAll()
+    .then(([rows, data]) =>
+      res.render("shop/index", {
+        prods: rows,
+        hasProducts: rows.length > 0,
+        shopCSS: true,
+        pageTitle: "Shop",
+        activeShop: true,
+      }),
+    )
+    .catch((err) => console.log(err));
 };
 
 export const getProducts = (req, res) => {
-  Product.fetchAll((products: Array<object>): void => {
+  Product.fetchAll().then(([rows, data]) =>
     res.render("shop/product-list", {
-      prods: products,
-      hasProducts: products.length > 0,
+      prods: rows,
+      hasProducts: rows.length > 0,
       shopCSS: true,
       pageTitle: "Shop",
       activeProducts: true,
-    });
-  });
+    }),
+  );
 };
 
 export const getCart = (req, res) => {
-  res.render("shop/cart", {
-    pageTitle: "Your cart",
-    activeCart: true,
+  Cart.getProducts((cart) => {
+    Product.fetchAll((products: Array<object>) => {
+      const cartProds = [];
+      for (let product of products) {
+        const cartProductData = cart.products.find(
+          (prod) => prod.id === product.id,
+        );
+        if (cartProductData)
+          cartProds.push({ productData: product, qty: cartProductData.qty });
+      }
+      console.log(cartProds);
+      res.render("shop/cart", {
+        pageTitle: "Your cart",
+        activeCart: true,
+        hasProduct: cartProds.length > 0,
+        products: cartProds,
+      });
+    });
   });
 };
 
@@ -73,4 +90,10 @@ export const getProductDetail = (
       shopCSS: true,
     }),
   );
+};
+
+export const postCartDelete = (req, res) => {
+  const prodId = req.body.productId;
+  Product.findById(prodId, (prod) => Cart.deleteProduct(prod.id, prod.price));
+  return res.redirect("/cart");
 };
