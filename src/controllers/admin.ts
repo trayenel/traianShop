@@ -12,7 +12,7 @@ export const postAddProduct = (
   req: {
     body: {
       title: string;
-      price: string;
+      price: number;
       image: string;
       description: string;
       id: number;
@@ -20,27 +20,28 @@ export const postAddProduct = (
   },
   res,
 ) => {
-  const product = new Product(
-    null,
+  const prod = new Product(
     req.body.title,
-    req.body.price + " lei",
+    req.body.price,
     req.body.image,
     req.body.description,
   );
-  product.save();
-  res.redirect("/");
+  prod
+    .save()
+    .then((data) => res.redirect("/"))
+    .catch((err: Error) => console.log(err));
 };
 
 export const getAdminProducts = (req, res) => {
-  Product.fetchAll((products: object[]): void => {
+  Product.fetchAll().then((data) =>
     res.render("admin/products", {
-      prods: products,
+      prods: data,
       pageTitle: "Admin Products",
-      hasProducts: products.length > 0,
+      hasProducts: data !== undefined,
       shopCSS: true,
       activeAdminProducts: true,
-    });
-  });
+    }),
+  );
 };
 
 export const getEditProduct = (req, res) => {
@@ -79,7 +80,7 @@ export const postEditProduct = (req, res) => {
   const updatedProd = new Product(
     prodId,
     updatedTitle,
-    updatedPrice + " lei",
+    updatedPrice,
     updatedImgUrl,
     updatedDesc,
   );

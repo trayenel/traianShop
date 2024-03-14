@@ -3,28 +3,30 @@ import Cart from "../models/cart";
 
 export const getIndex = (req, res) => {
   Product.fetchAll()
-    .then(([rows, data]) =>
+    .then((data) => {
       res.render("shop/index", {
-        prods: rows,
-        hasProducts: rows.length > 0,
+        prods: data,
+        hasProducts: data !== undefined,
         shopCSS: true,
         pageTitle: "Shop",
         activeShop: true,
-      }),
-    )
+      });
+    })
     .catch((err) => console.log(err));
 };
 
 export const getProducts = (req, res) => {
-  Product.fetchAll().then(([rows, data]) =>
-    res.render("shop/product-list", {
-      prods: rows,
-      hasProducts: rows.length > 0,
-      shopCSS: true,
-      pageTitle: "Shop",
-      activeProducts: true,
-    }),
-  );
+  Product.fetchAll()
+    .then((data) =>
+      res.render("shop/product-list", {
+        prods: data,
+        hasProducts: data !== undefined,
+        shopCSS: true,
+        pageTitle: "Shop",
+        activeProducts: true,
+      }),
+    )
+    .catch((err) => console.log(err));
 };
 
 export const getCart = (req, res) => {
@@ -84,9 +86,9 @@ export const getProductDetail = (
   res,
 ) => {
   const prodId = req.params.productId;
-  Product.findById(prodId, (product: { id: string; title: string }) =>
+  Product.findById(prodId).then((data) =>
     res.render("shop/product-detail", {
-      product: product,
+      product: data[0],
       shopCSS: true,
     }),
   );
