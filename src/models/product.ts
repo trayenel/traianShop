@@ -10,7 +10,6 @@ export default class Product {
   private price: number;
   private image: string;
   private description: string;
-  private id: string;
 
   constructor(
     title: string,
