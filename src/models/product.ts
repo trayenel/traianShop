@@ -32,13 +32,33 @@ export default class Product {
     });
   }
 
+  public static async editProduct(
+    updTitle: string,
+    updPrice: number,
+    updDesc: string,
+    updImage: string,
+    productId: string,
+  ) {
+    return await db
+      .update(prods)
+      .set({
+        title: updTitle,
+        price: updPrice,
+        description: updDesc,
+        image: updImage,
+      })
+      .where(eq(prods.id, productId));
+  }
+
   public static async fetchAll() {
     return await db.select().from(prods);
+  }
+
+  public static async deleteProduct(productId: string) {
+    return await db.delete(prods).where(eq(prods.id, productId));
   }
 
   public static async findById(id: string) {
     return await db.select().from(prods).where(eq(prods.id, id));
   }
-
-  public static deleteProduct(product: Product) {}
 }
