@@ -1,10 +1,12 @@
-import { drizzle } from "drizzle-orm/mysql2";
-import mysql from "mysql2/promise";
+import { drizzle } from "drizzle-orm/node-postgres";
+import { Pool } from "pg";
 
-const poolConnection = mysql.createPool({
-  host: "localhost",
-  user: "root",
-  database: "shop",
+const pool = new Pool({
+  host: "127.0.0.1",
+  port: 5432,
+  user: "traian",
+  password: "traian",
+  database: "shopdb",
 });
 
-export const db = drizzle(poolConnection);
+export const db = drizzle(pool);

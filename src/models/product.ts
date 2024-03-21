@@ -1,5 +1,5 @@
 import { db } from "../db/database";
-import { prods } from "../db/schema";
+import { prods, shopSchema } from "../db/schema";
 import { eq } from "drizzle-orm";
 import Cart from "./cart";
 
