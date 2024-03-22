@@ -3,29 +3,29 @@ import Cart from "../models/cart";
 
 export const getIndex = (req, res) => {
   Product.fetchAll()
-    .then((data) => {
+    .then((data) =>
       res.render("shop/index", {
         prods: data,
-        hasProducts: data !== undefined,
+        hasProducts: data.length > 0,
         shopCSS: true,
         pageTitle: "Shop",
         activeShop: true,
-      });
-    })
+      }),
+    )
     .catch((err) => console.log(err));
 };
 
 export const getProducts = (req, res) => {
   Product.fetchAll()
-    .then((data) =>
+    .then((data) => {
       res.render("shop/product-list", {
         prods: data,
-        hasProducts: data !== undefined,
+        hasProducts: data.length > 0,
         shopCSS: true,
         pageTitle: "Shop",
         activeProducts: true,
-      }),
-    )
+      });
+    })
     .catch((err) => console.log(err));
 };
 

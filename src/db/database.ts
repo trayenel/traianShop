@@ -7,7 +7,7 @@ export const connection = new Pool({
   port: 5432,
   user: "traian",
   password: "traian",
-  database: "shopdb",
+  database: "shop_db",
 });
 
 export const db = drizzle(connection, { schema });

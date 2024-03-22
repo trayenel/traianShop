@@ -37,7 +37,7 @@ export const getAdminProducts = (req, res) => {
     res.render("admin/products", {
       prods: data,
       pageTitle: "Admin Products",
-      hasProducts: data !== undefined,
+      hasProducts: data.length > 0,
       shopCSS: true,
       activeAdminProducts: true,
     }),
