@@ -30,41 +30,24 @@ export const getProducts = (req, res) => {
 };
 
 export const getCart = (req, res) => {
-  Cart.getProducts((cart) => {
-    Product.fetchAll((products: Array<object>) => {
-      const cartProds = [];
-      for (let product of products) {
-        const cartProductData = cart.products.find(
-          (prod) => prod.id === product.id,
-        );
-        if (cartProductData)
-          cartProds.push({ productData: product, qty: cartProductData.qty });
-      }
-      console.log(cartProds);
+  Cart.getProducts(req.user.id)
+    .then((data) => {
+      const table: Array<object> = [];
+      data.forEach((prod) => table.push(prod));
       res.render("shop/cart", {
         pageTitle: "Your cart",
         activeCart: true,
-        hasProduct: cartProds.length > 0,
-        products: cartProds,
+        hasProduct: table.length > 0,
+        product: table,
       });
-    });
-  });
+    })
+    .catch((err) => console.log(err));
 };
 
 export const postCart = (req, res) => {
-  const prodId = req.body.productId;
-  Product.findById(
-    prodId,
-    (product: {
-      title: string;
-      price: string;
-      image: string;
-      description: string;
-    }) => {
-      Cart.addProduct(prodId, +product.price.split(" ")[0]);
-    },
+  Cart.addProduct(req.body.productId, req.cart.id).then((data) =>
+    res.redirect("/cart"),
   );
-  res.redirect("/cart");
 };
 
 export const getCheckout = (req, res) => {
@@ -95,7 +78,6 @@ export const getProductDetail = (
 };
 
 export const postCartDelete = (req, res) => {
-  const prodId = req.body.productId;
-  Product.findById(prodId, (prod) => Cart.deleteProduct(prod.id, prod.price));
+  Cart.deleteProduct(req.body.productCartId, req.cart.id);
   return res.redirect("/cart");
 };

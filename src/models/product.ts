@@ -1,26 +1,27 @@
 import { db } from "../db/database";
-import { prods, shopSchema } from "../db/schema";
+import { prods } from "../db/schema";
 import { eq } from "drizzle-orm";
 import Cart from "./cart";
-
-let products: object[] = [];
 
 export default class Product {
   private title: string;
   private price: number;
   private image: string;
   private description: string;
+  private ownerId: number;
 
   constructor(
     title: string,
     price: number,
     image: string,
     description: string,
+    ownerId: number,
   ) {
     this.title = title;
     this.price = price;
     this.image = image;
     this.description = description;
+    this.ownerId = ownerId;
   }
 
   public async save() {
@@ -29,6 +30,7 @@ export default class Product {
       price: this.price,
       description: this.description,
       image: this.image,
+      userId: this.ownerId,
     });
   }
 
@@ -37,7 +39,7 @@ export default class Product {
     updPrice: number,
     updDesc: string,
     updImage: string,
-    productId: string,
+    productId: number,
   ) {
     return await db
       .update(prods)

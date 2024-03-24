@@ -1,4 +1,5 @@
 import Product from "../models/product";
+import User from "../models/user";
 
 export const getAddProduct = (req, res) => {
   res.render("admin/edit-product", {
@@ -10,6 +11,7 @@ export const getAddProduct = (req, res) => {
 
 export const postAddProduct = (
   req: {
+    user: { id: number };
     body: {
       title: string;
       price: number;
@@ -25,6 +27,7 @@ export const postAddProduct = (
     req.body.price,
     req.body.image,
     req.body.description,
+    req.user.id,
   );
   prod
     .save()
@@ -33,7 +36,7 @@ export const postAddProduct = (
 };
 
 export const getAdminProducts = (req, res) => {
-  Product.fetchAll().then((data) =>
+  User.getProducts(req.user.id).then((data) =>
     res.render("admin/products", {
       prods: data,
       pageTitle: "Admin Products",
