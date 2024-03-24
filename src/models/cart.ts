@@ -9,6 +9,28 @@ export default class Cart {
       .values({ cartId: cartId, cartItemId: prodId, qty: 1 });
   }
 
+  public static async getProduct(prodId: number, cartId: number) {
+    return await db
+      .select()
+      .from(cartEntries)
+      .where(
+        and(eq(cartEntries.cartId, cartId), eq(cartEntries.cartItemId, prodId)),
+      );
+  }
+
+  public static async updateProduct(
+    prodId: number,
+    cartId: number,
+    quantity: number,
+  ) {
+    return await db
+      .update(cartEntries)
+      .set({ qty: quantity })
+      .where(
+        and(eq(cartEntries.cartId, cartId), eq(cartEntries.cartItemId, prodId)),
+      );
+  }
+
   public static async findCart(userId: number) {
     return await db.select().from(cart).where(eq(cart.userId, userId));
   }
@@ -21,7 +43,7 @@ export default class Cart {
       );
   }
 
-  public static async getProducts(userId: number) {
+  public static async getAllProducs(userId: number) {
     return await db
       .select()
       .from(usr)
