@@ -22,6 +22,7 @@ export default class Cart {
     prodId: number,
     cartId: number,
     quantity: number,
+    price: number,
   ) {
     return await db
       .update(cartEntries)

@@ -33,7 +33,10 @@ export const getCart = (req, res) => {
   Cart.getAllProducs(req.user.id)
     .then((data) => {
       const table: Array<object> = [];
-      data.forEach((prod) => table.push(prod));
+      data.forEach((prod) => {
+        prod.products.price = prod.products.price * prod.cartEntries.qty;
+        table.push(prod);
+      });
       res.render("shop/cart", {
         pageTitle: "Your cart",
         activeCart: true,
