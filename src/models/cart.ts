@@ -53,4 +53,8 @@ export default class Cart {
       .innerJoin(cartEntries, eq(cart.id, cartEntries.cartId))
       .innerJoin(prods, eq(prods.id, cartEntries.cartItemId));
   }
+
+  public static async emptyCart(cartId: number) {
+    return await db.delete(cartEntries).where(eq(cartEntries.cartId, cartId));
+  }
 }

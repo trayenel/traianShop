@@ -43,3 +43,11 @@ export const cartEntries = shopSchema.table("cartEntries", {
     .references(() => prods.id, { onDelete: "cascade" }),
   qty: integer("qty").notNull(),
 });
+
+export const orders = shopSchema.table("orders", {
+  id: serial("id").notNull().unique(),
+  usrId: serial("usrId")
+    .notNull()
+    .references(() => usr.id),
+  totalPrice: real("totalPrice").notNull(),
+});

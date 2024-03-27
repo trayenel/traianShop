@@ -11,5 +11,11 @@
             />
             <button class="btn" type="submit">Delete</button></form>
         </li>{{/each}}</ul>
-  {{else}} <p>No products</p>{{/if}}
+    <form action="checkout" method="post"><input
+        type="hidden"
+        value="{{total}}"
+        name="totalPrice"
+      />
+      <button class="btn" type="submit">checkout</button></form>
+  {{else}}<p>No products</p>{{/if}}
 </main>
