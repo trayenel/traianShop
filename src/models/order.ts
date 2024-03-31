@@ -1,5 +1,5 @@
 import { db } from "../db/database";
-import { orders } from "../db/schema";
+import { prods, cart, usr, cartEntries, orders } from "../db/schema";
 import { eq, and } from "drizzle-orm";
 
 export default class Order {
@@ -12,4 +12,6 @@ export default class Order {
       .delete(orders)
       .where(and(eq(orders.usrId, userId), eq(orders.id, orderId)));
   }
+
+  public static async getOrder(userId: number) {}
 }

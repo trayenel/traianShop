@@ -52,30 +52,8 @@ export const getCart = (req, res) => {
 };
 
 export const postCart = (req, res) => {
-  Cart.getProduct(req.body.productId, req.cart.id).then(
-    (
-      data: Array<{
-        id: number;
-        cartId: number;
-        cartItemId: number;
-        qty: number;
-      }>,
-    ) => {
-      if (data.length === 0) {
-        Cart.addProduct(req.body.productId, req.cart.id).then((data) =>
-          res.redirect("/cart"),
-        );
-      } else {
-        Cart.updateProduct(
-          req.body.productId,
-          req.cart.id,
-          data[0].qty + 1,
-        ).then((data) => {
-          if (!data.rowCount) throw Error();
-          res.redirect("/cart");
-        });
-      }
-    },
+  Cart.addProduct(req.body.productId, req.cart.id).then((data) =>
+    res.redirect("/cart"),
   );
 };
 

@@ -1,32 +1,22 @@
 import { db } from "../db/database";
 import { prods, cart, usr, cartEntries } from "../db/schema";
-import { and, eq } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 
 export default class Cart {
   public static async addProduct(prodId: number, cartId: number) {
     return await db
       .insert(cartEntries)
-      .values({ cartId: cartId, cartItemId: prodId, qty: 1 });
+      .values({ cartId: cartId, cartItemId: prodId, qty: 1 })
+      .onConflictDoUpdate({
+        target: cartEntries.cartItemId,
+        set: { qty: sql`${cartEntries.qty} + 1` },
+      });
   }
 
   public static async getProduct(prodId: number, cartId: number) {
     return await db
       .select()
       .from(cartEntries)
-      .where(
-        and(eq(cartEntries.cartId, cartId), eq(cartEntries.cartItemId, prodId)),
-      );
-  }
-
-  public static async updateProduct(
-    prodId: number,
-    cartId: number,
-    quantity: number,
-    price: number,
-  ) {
-    return await db
-      .update(cartEntries)
-      .set({ qty: quantity })
       .where(
         and(eq(cartEntries.cartId, cartId), eq(cartEntries.cartItemId, prodId)),
       );
