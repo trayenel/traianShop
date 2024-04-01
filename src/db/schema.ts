@@ -2,7 +2,7 @@ import {
   serial,
   integer,
   text,
-  real,
+  numeric,
   varchar,
   pgSchema,
 } from "drizzle-orm/pg-core";
@@ -12,7 +12,7 @@ export const shopSchema = pgSchema("shop");
 export const prods = shopSchema.table("products", {
   id: serial("id").notNull().primaryKey(),
   title: varchar("title", { length: 255 }).notNull(),
-  price: real("price").notNull(),
+  price: numeric("price", { precision: 5, scale: 2 }).notNull(),
   description: text("description").notNull(),
   image: varchar("image", { length: 255 }).notNull(),
   userId: integer("userId")
@@ -45,10 +45,18 @@ export const cartEntries = shopSchema.table("cartEntries", {
   qty: integer("qty").notNull(),
 });
 
-export const orders = shopSchema.table("orders", {
-  id: serial("id").notNull().unique(),
-  usrId: serial("usrId")
+export const orderEntries = shopSchema.table("orderEntries", {
+  id: serial("id").notNull().primaryKey(),
+  orderId: integer("orderId")
     .notNull()
-    .references(() => usr.id),
-  totalPrice: real("totalPrice").notNull(),
+    .references(() => orders.id),
+  orderItemId: integer("orderItemId")
+    .notNull()
+    .references(() => prods.id, { onDelete: "cascade" }),
+  qty: integer("qty").notNull(),
 });
+
+export const orders = shopSchema.table('orders', {
+  id: serial('id').primaryKey().notNull(),
+  userId: integer('userId').notNull().references(() => usr.id)
+})

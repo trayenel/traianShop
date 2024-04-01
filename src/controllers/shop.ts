@@ -34,17 +34,17 @@ export const getCart = (req, res) => {
   let totalPrice = 0;
   Cart.getAllProducs(req.user.id)
     .then((data) => {
-      const table: Array<object> = [];
+      const productArr: Array<object> = [];
       data.forEach((prod) => {
         prod.products.price = prod.products.price * prod.cartEntries.qty;
         totalPrice += prod.products.price;
-        table.push(prod);
+        productArr.push(prod);
       });
       res.render("shop/cart", {
         pageTitle: "Your cart",
         activeCart: true,
-        hasProduct: table.length > 0,
-        product: table,
+        hasProduct: productArr.length > 0,
+        product: productArr,
         total: totalPrice,
       });
     })
@@ -78,22 +78,22 @@ export const getProductDetail = (
 };
 
 export const postCartDelete = (req, res) => {
-  Cart.deleteProduct(req.body.productCartId, req.cart.id);
-  return res.redirect("/cart");
+  Cart.deleteProduct(req.body.productCartId, req.cart.id).then(() => res.redirect("/cart"))
 };
 
 export const postCheckout = (req, res) => {
-  Cart.emptyCart(req.cart.id);
-  Order.addOrder(req.user.id, req.body.totalPrice);
-  res.render("shop/checkout", {
-    pageTitle: "Checkout",
-    activeCheckout: true,
-  });
+  const ordersArr: Array<object> = [];
+  Cart.getAllProducs(req.user.id).then(data => { let orderId: number; Order.createOrder(req.user.id).then(data => orderId = data[0].id).then(() => data.forEach(prod => Order.addOrderItems(orderId, prod.products.id, prod.cartEntries.qty))) })
+  // Cart.emptyCart(req.cart.id)
+  res.redirect('/checkout')
 };
 
 export const getCheckout = (req, res) => {
-  res.render("shop/checkout", {
-    pageTitle: "Checkout",
-    activeCheckout: true,
-  });
+  const ordersArr: Array<object> = []
+  Order.getOrders(req.user.id).then(data => data.forEach(prod => ordersArr.push({ orderId: prod.orders.id, prodTitle: prod.products?.title, prodPrice: prod.products?.price * prod.orderEntries?.qty, prodQty: prod.orderEntries?.qty }))).then(() =>
+    res.render("shop/checkout", {
+      pageTitle: "Checkout",
+      activeCheckout: true,
+      orders: ordersArr
+    }))
 };
