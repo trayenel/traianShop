@@ -56,7 +56,9 @@ export const orderEntries = shopSchema.table("orderEntries", {
   qty: integer("qty").notNull(),
 });
 
-export const orders = shopSchema.table('orders', {
-  id: serial('id').primaryKey().notNull(),
-  userId: integer('userId').notNull().references(() => usr.id)
-})
+export const orders = shopSchema.table("orders", {
+  id: serial("id").primaryKey().notNull(),
+  userId: integer("userId")
+    .notNull()
+    .references(() => usr.id),
+});

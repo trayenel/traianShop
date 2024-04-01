@@ -78,22 +78,45 @@ export const getProductDetail = (
 };
 
 export const postCartDelete = (req, res) => {
-  Cart.deleteProduct(req.body.productCartId, req.cart.id).then(() => res.redirect("/cart"))
+  Cart.deleteProduct(req.body.productCartId, req.cart.id).then(() =>
+    res.redirect("/cart"),
+  );
 };
 
 export const postCheckout = (req, res) => {
   const ordersArr: Array<object> = [];
-  Cart.getAllProducs(req.user.id).then(data => { let orderId: number; Order.createOrder(req.user.id).then(data => orderId = data[0].id).then(() => data.forEach(prod => Order.addOrderItems(orderId, prod.products.id, prod.cartEntries.qty))) })
+  Cart.getAllProducs(req.user.id).then((data) => {
+    let orderId: number;
+    Order.createOrder(req.user.id)
+      .then((data) => (orderId = data[0].id))
+      .then(() =>
+        data.forEach((prod) =>
+          Order.addOrderItems(orderId, prod.products.id, prod.cartEntries.qty),
+        ),
+      );
+  });
   // Cart.emptyCart(req.cart.id)
-  res.redirect('/checkout')
+  res.redirect("/checkout");
 };
 
 export const getCheckout = (req, res) => {
-  const ordersArr: Array<object> = []
-  Order.getOrders(req.user.id).then(data => data.forEach(prod => ordersArr.push({ orderId: prod.orders.id, prodTitle: prod.products?.title, prodPrice: prod.products?.price * prod.orderEntries?.qty, prodQty: prod.orderEntries?.qty }))).then(() =>
-    res.render("shop/checkout", {
-      pageTitle: "Checkout",
-      activeCheckout: true,
-      orders: ordersArr
-    }))
+  const ordersArr: Array<object> = [];
+  Order.getOrders(req.user.id)
+    .then((data) =>
+      data.forEach((prod) =>
+        ordersArr.push({
+          orderId: prod.orders.id,
+          prodTitle: prod.products?.title,
+          prodPrice: prod.products?.price * prod.orderEntries?.qty,
+          prodQty: prod.orderEntries?.qty,
+        }),
+      ),
+    )
+    .then(() =>
+      res.render("shop/checkout", {
+        pageTitle: "Checkout",
+        activeCheckout: true,
+        orders: ordersArr,
+      }),
+    );
 };
