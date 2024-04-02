@@ -1,9 +1,6 @@
 import { db } from "../db/database";
 import {
   prods,
-  cart,
-  usr,
-  cartEntries,
   orders,
   orderEntries,
 } from "../db/schema";

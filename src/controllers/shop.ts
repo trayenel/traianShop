@@ -112,6 +112,7 @@ export const getCheckout = (req, res) => {
         }),
       ),
     )
+    .then(() => console.log(ordersArr))
     .then(() =>
       res.render("shop/checkout", {
         pageTitle: "Checkout",
